@@ -21,14 +21,15 @@ screen binary comes from git://git.yoctoproject.org/psplash. Please see the
 ## Gadget Snaps
 
 Gadget snaps are a special type of snaps that contain device specific support
-code and data. You can read more about them in the snapcraft forum:
-https://forum.snapcraft.io/t/the-gadget-snap/
+code and data. You can read more about them in the official docs:
+https://ubuntu.com/core/docs/gadget-snaps
+https://ubuntu.com/core/docs/gadget-building
 
 
 ## Reporting Issues
 
 Please report all issues here on the github page via:
-https://github.com/snapcore/pi-gadget/issues
+https://github.com/mboyar/pi-gadget/issues
 
 
 ## Branding
@@ -42,22 +43,27 @@ and remove the `splash` and the `vt.handoff=2` keywords from the default kernel
 commandline.
 
 
-## Building
+## Building for Raspberry Pi 2
 
-This gadget snap can optionally be cross built on an amd64 machine. To do so,
-just run `snapcraft` with an appropriate `--target-arch` switch, and
-`--destructive-mode` in the top level of the source tree after cloning it and
-selecting the appropriate branch:
+This gadget snap can be cross built on a VM (multipass). To do so,
+just run `snapcraft` without any arguments in the top level of the source tree after cloning it and selecting the appropriate branch:   
 
     $ sudo snap install snapcraft --classic
-    $ git clone https://github.com/snapcore/pi-gadget
+    $ git clone https://github.com/mboyar/pi-gadget
     $ cd pi-gadget
-    $ git checkout 18-arm64
-    $ sudo snapcraft clean --destructive-mode
-    $ sudo snapcraft snap --target-arch=arm64 --destructive-mode
+    $ git checkout 20-armhf
 
-The branches included are:
+After manipulating the files you want, continue to apply the steps below to create the gadget snap and then the pi image;
 
-* 18-arm64 - the branch for Core 18 on arm64
-* 18-armhf - the branch for Core 18 on armhf
-* classic - the branch for Ubuntu (universal gadget)
+    $ sudo snapcraft clean
+    $ snapcraft
+    $ snap known --remote model series=16 model=ubuntu-core-20-pi-armhf-dangerous  brand-id=canonical >ubuntu-core-20-pi-armhf-dangerous.model
+    $ sudo ubuntu-image --channel stable --snap pi_20-1_armhf.snap ubuntu-core-20-pi-armhf-dangerous.model
+    $ file pi.img 
+    pi.img: DOS/MBR boot sector; partition 1 : ID=0xc, start-CHS (0x10,0,1), end-CHS (0x3ff,3,32), startsector 2048, 2457600 sectors
+
+
+Now, you can burn the `pi.img` to a micro SDcard (>4GB, Class10 or SDHC) by using your favorite disk imager. Follow the steps in the URL https://ubuntu.com/download/raspberry-pi-core (skip **Step 2** to use your Raspberry Pi with your own image `pi.img`)
+
+
+
