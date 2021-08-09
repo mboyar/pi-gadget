@@ -65,5 +65,6 @@ After manipulating the files you want, continue to apply the steps below to crea
 
 Now, you can burn the `pi.img` to a micro SDcard (>4GB, Class10 or SDHC) by using your favorite disk imager. Follow the steps in the URL https://ubuntu.com/download/raspberry-pi-core (skip **Step 2** to use your Raspberry Pi with your own image `pi.img`)
 
+![2021-08-09_23-16-10](https://user-images.githubusercontent.com/3090609/128770923-86a083d3-c920-4c2e-90e8-29d1e18c2f16.gif)
 
-
+You can watch the same content above gif on Youtube https://youtu.be/pIZN5LFos5M 
